@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>DistSearch</title>
+
+    <meta name="description" content="SMP Distributed search experience">
+    <meta name="author" content="Dmitriy Kolmogortsev">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/white.css" id="theme">
+
+    <link rel="stylesheet" href="css/hljs/idea.css" id="highlight-theme">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+
+    <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+
+    <style>
+        .reveal .slide-number {
+            font-size: 22pt;
+            color: black;
+        }
+        
+        .reveal pre {
+            background: none;
+            border: none;
+            box-shadow: none;
+        }
+        
+        .reveal pre code {
+            color: black;
+            background: none;
+            box-shadow: none;
+            max-height: none;
+        }
+        /* .reveal section img {
+            border: none;
+            box-shadow: none;
+        }*/
+        
+        .reveal pre code {
+            overflow: hidden;
+        }
+        
+        .reveal .footer {
+            font-size: 22pt;
+            position: absolute;
+            left: 35%;
+            bottom: 0.5em;
+        }
+        
+        #corp-name {
+            color: orangered;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+        
+        .stroke {
+            text-decoration: line-through;
+        }
+        
+        .red-text {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="reveal">
+        <div class="footer">
+            <span id="corp-name"><b>NAUMEN</b></span>
+            <span id="speaker-name">Колмогорцев Дмитрий</span>
+        </div>
+        <!-- Any section element inside of this container is displayed as a slide -->
+        <div class="slides">
+            <section>
+                <h4>Тестирование програмного обеспечения</h4>
+                <h5>Как это?</h5>
+                <p>
+                    <small>
+                        Колмогорцев Дмитрий / <a href="mailto:dkolmogortsev@naumen.ru">dkolmogortsev@naumen.ru</a>
+                        <br/>
+                        <br/>
+                    </small>
+                </p>
+            </section>
+            <section>
+                <h3>План:</h3>
+                <ol>
+                    <li>Собственно, зачем тестировать?</li>
+                    <li>Виды тестирования</li>
+                    <li>Инструменты</li>
+                    <li>TDD</li>
+                    <li>BDD</li>
+                    <li>UI-Testing</li>
+                    <li>Stress testing</li>
+                </ol>
+            </section>
+            <section>
+                <h3>Зачем тестировать?</h3>
+                <p id="checkNoBugs">Проверить, что багов нет!</p>
+                <p class="fragment" id="aVotInet">А вот и нет!</p>
+            </section>
+            <section>
+                <h3>Цели тестирования:</h3>
+                <ul>
+                    <li class="fragment"> Определить, что продукт соотвествует заявленным требованиям</li>
+                    <li class="fragment"> Адекватно работает при любом наборе входных данных</li>
+                    <li class="fragment"> Выдает результат за адекватное время</li>
+                </ul>
+            </section>
+        </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <script>
+        // Full list of configuration options available at:
+        // https://github.com/hakimel/reveal.js#configuration
+        Reveal.initialize({
+            controls: false,
+            progress: true,
+            history: true,
+            center: true,
+            slideNumber: true,
+
+            transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+            // Optional reveal.js plugins
+            dependencies: [{
+                src: 'lib/js/classList.js',
+                condition: function() {
+                    return !document.body.classList;
+                }
+            }, {
+                src: 'plugin/markdown/marked.js',
+                condition: function() {
+                    return !!document.querySelector('[data-markdown]');
+                }
+            }, {
+                src: 'plugin/markdown/markdown.js',
+                condition: function() {
+                    return !!document.querySelector('[data-markdown]');
+                }
+            }, {
+                src: 'plugin/highlight/highlight.js',
+                async: true,
+                condition: function() {
+                    return !!document.querySelector('pre code');
+                },
+                callback: function() {
+                    hljs.initHighlightingOnLoad();
+                }
+            }, {
+                src: 'plugin/zoom-js/zoom.js',
+                async: true
+            }, {
+                src: 'plugin/notes/notes.js',
+                async: true
+            }]
+        });
+
+        Reveal.addEventListener('fragmentshown', function(event) {
+            if (event.fragment.id == 'aVotInet') {
+                document.getElementById('checkNoBugs').classList.add("stroke");
+            }
+        });
+
+        Reveal.addEventListener('fragmenthidden', function(event) {
+            if (event.fragment.id == 'aVotInet') {
+                document.getElementById('checkNoBugs').classList.remove("stroke");
+            }
+        });
+    </script>
+
+</body>
+
+</html>
