@@ -126,6 +126,66 @@
                     <li class="fragment"> Выдает результат за адекватное время</li>
                 </ul>
             </section>
+            <section>
+                <h4>Ручное тестирование</h4>
+                <ul>
+                    <li>Довольно затратно</li>
+                    <li>Тестировать регрессию еще более затратно</li>
+                    <li>Порой имеет место человеческий фактор</li>
+                </ul>
+            </section>
+            <section>
+                <h4>Автоматизированное тестирование</h4>
+                <ul>
+                    <li>Тоже не бесплатно</li>
+                    <li>Тестировать регрессию почти ничего не стоит</li>
+                    <li>Суждение робота неизменно</li>
+                    <li>Человеческий фактор, все таки тоже имеет место быть</li>
+                </ul>
+            </section>
+            <section>
+                <h4>AT</h4>
+                <img src="img/test_pyramid.png"/>
+            </section>
+            <section>
+                <h4>Модульное тестирование<br>(Unit testing)</h4>
+                <img src="img/unit_test.png">
+            </section>
+            <section>
+                <pre>
+                    <code class="java" data-trim>
+                    package org.testingtalk.account;
+                            
+                    import java.util.concurrent.ConcurrentHashMap;
+                    import java.util.concurrent.atomic.AtomicInteger;
+                            
+                    public class AccountInfoService
+                    {
+                        private final AtomicInteger idSequence = new AtomicInteger();
+                            
+                        private final ConcurrentHashMap<Long, AccountInfo> accountsData = new ConcurrentHashMap<Long, AccountInfo>();
+                            
+                        public Long createNewAccountInfo(){
+                            AccountInfo newInfo = new AccountInfo(idSequence.getAndIncrement());
+                            accountsData.put(newInfo.getAccountId(), newInfo);
+                            return newInfo.getAccountId();
+                        }
+                        ...
+                        
+                        public void deleteInfo(long accountId){
+                            accountsData.remove(accountId);
+                        }
+                    }
+                    </code>
+                </pre>
+            </section>
+            <section>
+                code here
+            </section>
+            <section>
+                <h4>Интеграционное тестирование</h4>
+                <img src="img/integration_test.png">
+            </section>
         </div>
     </div>
 
