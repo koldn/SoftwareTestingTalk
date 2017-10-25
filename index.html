@@ -152,41 +152,289 @@
                 <img src="img/unit_test.png">
             </section>
             <section>
+                <h4>Sample</h4>
                 <pre>
                     <code class="java" data-trim>
-                    package org.testingtalk.account;
+package org.testingtalk.account;
                             
-                    import java.util.concurrent.ConcurrentHashMap;
-                    import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
                             
-                    public class AccountInfoService
-                    {
-                        private final AtomicInteger idSequence = new AtomicInteger();
+public class AccountInfoService
+{
+    private final AtomicInteger idSequence = new AtomicInteger();
                             
-                        private final ConcurrentHashMap<Long, AccountInfo> accountsData = new ConcurrentHashMap<Long, AccountInfo>();
+    private final ConcurrentHashMap&ltLong, AccountInfo&gt accountsData = new ConcurrentHashMap&ltLong, AccountInfo&gt();
                             
-                        public Long createNewAccountInfo(){
-                            AccountInfo newInfo = new AccountInfo(idSequence.getAndIncrement());
-                            accountsData.put(newInfo.getAccountId(), newInfo);
-                            return newInfo.getAccountId();
-                        }
-                        ...
-                        
-                        public void deleteInfo(long accountId){
-                            accountsData.remove(accountId);
-                        }
-                    }
+    public AccountInfo createNewAccountInfo(){
+        AccountInfo newInfo = new AccountInfo(idSequence.getAndIncrement());
+        accountsData.put(newInfo.getAccountId(), newInfo);
+        return newInfo;
+    }
+    ...
+}
                     </code>
                 </pre>
             </section>
             <section>
-                code here
+                <h4>Как бы протестить?</h4>
+                <ol>
+                    <li class="fragment">Подготовить данные</li>
+                    <li class="fragment">Что-то сделать с данными</li>
+                    <li class="fragment">Проверить результат дейсвтий</li>
+                    <li class="fragment">Убрать за собой, если требуется</li>
+                </ol>
+            </section>
+            <section>
+                <h4>В первом приближении</h4>
+                <pre>
+                    <code class="java" data-trim>
+                        public static void main(String[] args)
+                        {   
+                            //Подготовка
+                            AccountInfoService service = new AccountInfoService();
+                            //Действия
+                            AccountInfo info = service.createNewAccountInfo();
+                            //Проверка
+                            assert 0 == info.getBalance();
+                        }
+                    </code>
+                </pre>
+            </section>
+            <section>
+                <h4>А можно не через main?</h4>
+                <div class="fragment">
+                    <p>Можно - JUnit</p>
+                    <pre>
+                        <code class="java" data-trim>
+                            import static org.junit.Assert.*;
+                            import org.junit.Test;
+
+                            public class AccountInfoTest {
+
+                                @Test
+                                public void testNewInfoBalanceIsZero(){
+                                    //Подготовка
+                                    AccountInfoService service = new AccountInfoService();
+                                    //Действия
+                                    AccountInfo newInfo = service.createNewAccountInfo();
+                                    //Проверка
+                                    String message = "Balance is non zero"
+                                    assertEquals(message,0, newInfo.getBalance());
+                                }
+                            }
+                        </code>
+                    </pre>
+                </div>
+            </section>
+            <section>
+                <h4>JUnit аннотации</h4>
+                <pre>
+                    <code class="java" data-trim>
+                        public class BaseTest{
+                            @BeforeClass //Действия перед запуском класса
+                            public static void setupClass() {}
+
+                            @Before //Действия перед зауском теста
+                            public void setup() {}
+
+                            @After //Действия после завершения теста
+                            public void tearDown() {}
+
+                            @AfterClass //Действия после завершения тестового класса
+                            public void tearDownClass() {}
+                        }
+                    </code>
+                </pre>
+            </section>
+            <section>
+                <h4>Можно и так</h4>
+                <pre>
+                    <code class="java" data-trim>
+                        public class ConreteTest extends BaseTest{
+                            //Действия перед запуском тестов
+                            //Для данного класса, в дополнение к BaseTest#setup()
+                            @Before 
+                            public void setupConcrete() {}
+                            ...
+                        }
+                    </code>
+                </pre>
+            </section>
+            <section>
+                <h3>@Test</h3>
+                <pre>
+                    <code class="java" data-trim>
+                            @Retention(RetentionPolicy.RUNTIME)
+                            @Target({ElementType.METHOD})
+                            public @interface Test {
+                                //Какой Exception мы ожидаем при тесте
+                                Class&lt? extends Throwable&gt expected() \
+                                default Test.None.class; 
+                            
+                                long timeout() default 0L; //Таймаут выполнения теста
+                            
+                                public static class None extends Throwable {
+                                    private static final long serialVersionUID = 1L;
+                            
+                                    private None() {
+                                    }
+                                }
+                            }
+                    </code>
+                </pre>
+            </section>
+            <section>
+                <h4>Что может быть</h4>
+                <pre>
+                    <code class="java" data-trim>
+                        public class AccountInfoServiceTest {
+                            private AccountInfoService service;
+                            
+                            @Before
+                            public void setup(){
+                                this.service = new AccountInfoService();
+                            }
+
+                            @Test(expected = IllegalArgumentException.class)
+                            public void testErrorWhenLoadNull(){
+                                this.service.getInfo(null);
+                            }
+
+                            @Test(timeout = 1000)
+                            public void testLoadWithinASecond(){
+                                this.service.get(1);
+                            }
+                        }
+                    </code>
+                </pre>
             </section>
             <section>
                 <h4>Интеграционное тестирование</h4>
                 <img src="img/integration_test.png">
             </section>
-        </div>
+            <section>
+                <h4>Как быть с зависимостями?</h4>
+                <ul>
+                    <li class="fragment">Удовлетворять зависимости реальными объектами</li>
+                    <li class="fragment">Использовать моки( Mocks )</li>
+                    <li class="fragment">Использовать stub</li>
+                </ul>
+            </section>
+            <section>
+                ${stub vs mocks}
+            </section>
+            <section>
+                ${test with mocks sample}
+            </section>
+            <section>
+                            ${test with mocks sample}
+            </section>
+            <section>
+                <h4>Функциональное тестирование ( UI )</h4>
+            </section>
+            <section>
+                    <h2>Selenium</h2>
+                    Инcтрумент для автоматизированного тестирования WEB-приложений<br>
+                    <ul>
+                        <li>Selenium WebDriver</li>
+                        <li>Selenium Grid</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Selenium Webdriver</h2>
+                    <ul>
+                        <li>Реализация на многих языках
+                        <li>Из коробки поддерживает управление Firefox
+                        <li>Можно научить управлять даже IE</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Samples</h2>
+                    <pre style="width:auto;"><code data-trim class="java">
+// Создаем новый webdriver с указанием на банарник firefox
+WebDriver wd = new FirefoxDriver(new FirefoxBinary(
+new File("D:\\ff\\firefox.exe")), new FirefoxProfile());  
+</code></pre>
+                </section>
+
+<section>
+                    <h2>Samples</h2>
+                    <pre style="width:auto;"><code data-trim class="java">
+// Открываем гугл
+wd.get("http://www.google.com");
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Samples</h2>
+                    <pre style="width:auto;"><code data-trim class="java">
+final String searchString = "selenium";
+
+// Находим поисковую строку и ищем "selenium"
+WebElement searchBox = wd.findElement(By.name("q"));
+searchBox.sendKeys(searchString);
+searchBox.submit();
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Samples</h2>
+                    <pre style="width:auto;"><code data-trim class="java">
+// т.к. google асинхронный - ждем поисковой выдачи
+(new WebDriverWait(wd, 10)).until(new ExpectedCondition&lt;Boolean&gt;() {
+    public Boolean apply(WebDriver d) {
+         return d.getTitle().toLowerCase().startsWith(searchString);
+    }
+});
+</code></pre>
+                </section>
+
+
+                <section>
+                    <h2>Samples</h2>
+                    <pre style="width:auto;"><code data-trim class="java">
+// закрываем webdriver
+wd.quit();
+                </code></pre>
+                </section>
+
+                <section>
+                    <h2>All together</h2>
+                    <pre style="width:auto;"><code data-trim class="java" style="font-size:80%;">
+public class SeleniumSample {
+    public static void main(String[] args) throws InterruptedException {
+        // Создаем новый webdriver с указанием на банарник firefox
+        WebDriver wd = new FirefoxDriver(new FirefoxBinary(new File(
+                "D:\\ff\\firefox.exe")), new FirefoxProfile());
+        // Открываем гугл
+        wd.get("http://www.google.com");
+        final String searchString = "selenium";
+        // Находим поисковую строку и ищем "selenium"
+        WebElement searchBox = wd.findElement(By.name("q"));
+        searchBox.sendKeys(searchString);
+        searchBox.submit();
+        // т.к. google асинхронный - ждем поисковой выдачи
+        (new WebDriverWait(wd, 10)).until(new ExpectedCondition&lt;Boolean&gt;() {
+            public Boolean apply(WebDriver d) {
+                return d.getTitle().toLowerCase().startsWith(searchString);
+            }
+        });
+        // закрываем webdriver
+        wd.quit();
+    }
+}
+</code></pre>
+                </section>
+                <section>
+                    <h4>Когда тесты запускать?</h4>
+                    <ul>
+                        <li>Всегда</li>
+                        <li>Написал код - запусти тесты</li>
+                        <li>При сборке проекта</li>
+                        <li>В CI</li>
+                    </ul>
+                </section>
     </div>
 
     <script src="lib/js/head.min.js"></script>
