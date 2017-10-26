@@ -435,6 +435,112 @@ public class SeleniumSample {
                         <li>В CI</li>
                     </ul>
                 </section>
+                <section>
+                    ${TDD}
+                </section>
+                <section>
+                    ${BDD}
+                </section>
+                <section>
+                    JUnit VS Spock
+                </section>
+                <section>
+                    ${TDD}
+                </section>
+
+                <section>
+                        <h2>Нагрузочное тестирование</h2>
+                        <img src="img/load.jpg" height="500px" />
+                    </section>
+                    <section>
+                        <h2>Проблема</h2>
+                        <ul>
+                            <li>Написана новая версия продукта - 4.0 (прошлая 3.8)
+                            <li>Старой пользуется много крупных клиентов(большое кол-во пользователей одновременно)
+                            <li>Новый продукт, конечно, прекрасен, но мы не знаем насколько хорошо он работает
+                            <li>Нужно сэмулировать работу пользователей
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Тестирование производительности</h2>
+                        <div>Проверить как быстро может работать система или её компоненты</div>
+                        <div>Что можно проверить:</div>
+                        <ul>
+                            <li>Время отклика
+                            <li>Время отображения
+                            <li>Пропускную способность
+                        </ul>
+                    </section>
+                    <section style="width: 100%">
+                        <h2>Время отклика</h2>
+                        <img src="img/resp.png" style="height: 500px">
+                    </section>
+                    <section>
+                        <h2>Время отображения</h2>
+                        <img src="img/render.png" style="height: 500px; max-height:150%">
+                    </section>
+                    <section>
+                        <h2>Пропускная способность</h2>
+                        <img src="img/bottleneck.jpg" style="height: 500px">
+                    </section>
+                    <section>
+                        <h2>Виды тестирования производительности:</h2>
+                        <ul>
+                            <li>Нагрузочное(load)
+                            <li>Стресс (stress)</li>
+                        </ul>
+                    </section>
+    
+                    <section>
+                        <h2>Нагрузочное тестирование</h2>
+                        Цель: проверить показатели работы приложения при ожидаемой нагрузке
+                    </section>
+    
+    
+                    <section>
+                        <h2>Стресс тестирование</h2>
+                        Цель: проверить показатели работы приложения при диспропорциональной нагрузке
+                    </section>
+                    <section>
+                        <h2>Stress in a nutshell</h2>
+                        <img src="img/stress.png">
+                    </section>
+                    <section>
+                        <h2>Процесс проведения</h2>
+                        <ol>
+                            <li>Определяем требуемые показатели
+                            <li>Определяем сценарий нагрузочного тестирования
+                            <li>Проводим тестирование*
+                            <li>Собираем результат
+                            <li>??????
+                            <li>PROFIT, а может и нет
+                        </ol>
+                        <p style="font-size: 20pt;">*Проводить тестирование всегда стоит на одном и том же сервере</p>
+                    </section>
+    
+                    <section>
+                        <h2>JMeter</h2>
+                        <p>Умеет тестировать:</p>
+                        <ul>
+                            <li>Web
+                            <li>JDBC
+                            <li>и другое
+                        </ul>
+                    </section>
+                        
+                     <section>
+                        <h2>Получаем сценарий</h2>
+                        <div>Два пути:</div>
+                        <ol>
+                            <li>Написать запросы руками
+                            <li style="color: green;" >Записать сценарий из браузера
+                        </ol>
+                    </section>
+    
+                    <section>
+                        <h2>Запись сценария</h2>
+                        <img src="img/proxy.png" height="400px">
+                    </section>
     </div>
 
     <script src="lib/js/head.min.js"></script>
