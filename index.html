@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="css/reveal.css">
     <link rel="stylesheet" href="css/theme/white.css" id="theme">
 
-    <link rel="stylesheet" href="css/hljs/idea.css" id="highlight-theme">
+    <link rel="stylesheet" href="css/hljs/vs.css" id="highlight-theme">
 
     <!-- Printing and PDF exports -->
     <script>
@@ -42,6 +42,7 @@
             background: none;
             border: none;
             box-shadow: none;
+            width: auto;
         }
         
         .reveal pre code {
@@ -50,13 +51,14 @@
             box-shadow: none;
             max-height: none;
         }
-        /* .reveal section img {
+        .reveal section img {
             border: none;
             box-shadow: none;
-        }*/
+        }
         
         .reveal pre code {
             overflow: hidden;
+            font-size: 70%;
         }
         
         .reveal .footer {
@@ -248,20 +250,6 @@ public class AccountInfoService
                 </pre>
             </section>
             <section>
-                <h4>Можно и так</h4>
-                <pre>
-                    <code class="java" data-trim>
-                        public class ConreteTest extends BaseTest{
-                            //Действия перед запуском тестов
-                            //Для данного класса, в дополнение к BaseTest#setup()
-                            @Before 
-                            public void setupConcrete() {}
-                            ...
-                        }
-                    </code>
-                </pre>
-            </section>
-            <section>
                 <h3>@Test</h3>
                 <pre>
                     <code class="java" data-trim>
@@ -314,21 +302,401 @@ public class AccountInfoService
                 <img src="img/integration_test.png">
             </section>
             <section>
+                <h4>Сервис переводов</h4>
+                <pre  style="width:auto;">
+                    <code class="java" data-trim>
+                            public class TransferService
+                            {
+                                ...
+                                public void makeTransfer(long sourceAccount, long targetAccount, double moneyAmount)
+                                {
+                                    //Проверить аккаунт источник
+                                    //Проверить целевой аккаунт
+                                    //Проверить сумму перевода
+                                    //Проверить наличие суммы у аккаунта источника
+                                    //Выполнить перевод
+                                }
+                                ...
+                            }                        
+                    </code>
+                </pre>
+            </section>
+            <section>
+                <h4>Сервис переводов: инициализация, поля</h4>
+                <pre>
+                <code class="java" data-trim>
+                        public class TransferService
+                        {
+                            private final AccountInfoService accountInfoService;
+                            private final TransferLogService logService;
+                                
+                            private int successFullTransfers = 0;
+                            private int failedTransfers =0;
+                            ...
+                        }                        
+                    </code>
+                </pre>
+            </section>
+            <section>
+                <h4>Сервис переводов: инициализация, конструктор</h4>
+                <pre  style="width:auto;">
+                <code class="java" data-trim>
+                        public class TransferService
+                        {   
+                            ...
+                            public TransferService(AccountInfoService accountInfoService,
+                                                   TransferLogService logService)
+                            {
+                                this.accountInfoService = accountInfoService;
+                                this.logService = logService;
+                            }
+                            ...
+                        }                        
+                    </code>
+                </pre>
+            </section>
+            <section>
+                    <h4>Сервис переводов. перевод</h4>
+                    <pre  style="width:auto;">
+                        <code class="java" data-trim>
+                                public class TransferService
+                                {
+                                    ...
+                                    public void makeTransfer(long sourceAccount, long targetAccount, double moneyAmount)
+                                    {
+                                        //Проверить аккаунт источник
+                                        if(sourceAccount <= 0){
+                                            throw new IllegalArgumentException("Invalid source account id: " + sourceAccount);
+                                        }
+                                        //Проверить целевой аккаунт
+                                        //Проверить сумму перевода
+                                        //Проверить наличие суммы у аккаунта источника
+                                        //Выполнить перевод
+                                    }
+                                    ...
+                                }                        
+                        </code>
+                    </pre>
+                </section>
+                <section>
+                        <h4>Сервис переводов. перевод</h4>
+                        <pre  style="width:auto;">
+                            <code class="java" data-trim>
+                                    public class TransferService
+                                    {
+                                        ...
+                                        public void makeTransfer(long sourceAccount, long targetAccount, double moneyAmount)
+                                        {
+                                            //Проверить аккаунт источник
+                                            //Проверить целевой аккаунт
+                                            if(targetAccount <= 0){
+                                                throw new IllegalArgumentException("Invalid target account id: "+targetAccount);
+                                            }
+                                            //Проверить сумму перевода
+                                            //Проверить наличие суммы у аккаунта источника
+                                            //Выполнить перевод
+                                        }
+                                        ...
+                                    }                        
+                            </code>
+                        </pre>
+            </section>
+            <section>
+                    <h4>Сервис переводов. перевод</h4>
+                    <pre  style="width:auto;">
+                        <code class="java" data-trim>
+                                public class TransferService
+                                {
+                                    ...
+                                    public void makeTransfer(long sourceAccount, long targetAccount, double moneyAmount)
+                                    {
+                                        //Проверить аккаунт источник
+                                        //Проверить целевой аккаунт
+                                        //Проверить сумму перевода
+                                        if(moneyAmount <= 0){
+                                            throw new IllegalArgumentException("Non positive transfer amount is specified");
+                                        }
+                                        //Проверить наличие суммы у аккаунта источника
+                                        //Выполнить перевод
+                                    }
+                                    ...
+                                }                        
+                        </code>
+                    </pre>
+            </section>
+            <section>
+                    <h4>Сервис переводов. перевод</h4>
+                    <pre  style="width:auto;">
+                        <code class="java" data-trim>
+                                public class TransferService
+                                {
+                                    ...
+                                    public void makeTransfer(long sourceAccount, long targetAccount, double moneyAmount)
+                                    {
+                                        //Проверить аккаунт источник
+                                        //Проверить целевой аккаунт
+                                        //Проверить сумму перевода
+                                        //Проверить наличие суммы у аккаунта источника
+                                        AccountInfo fromAccountInfo = accountInfoService.getInfo(sourceAccount);
+                                        if (fromAccountInfo.getCurrentBalance() < moneyAmount)
+                                        {
+                                            throw new UnsupportedOperationException("Not enough credit balance");
+                                        }
+                                        //Выполнить перевод
+                                    }
+                                    ...
+                                }                        
+                        </code>
+                    </pre>
+            </section>
+            <section>
+                    <h4>Сервис переводов. перевод</h4>
+                    <pre  style="width:auto;">
+                        <code class="java" data-trim>
+                                public class TransferService
+                                {
+                                    ...
+                                    public void makeTransfer(long sourceAccount, long targetAccount, double moneyAmount)
+                                    {
+                                        ...
+                                        //Выполнить перевод
+                                        try
+                                        {
+                                            performTransfer(sourceAccount, targetAccount, moneyAmount, fromAccountInfo);
+                                            logService.logTransfer(sourceAccount, targetAccount, moneyAmount);
+                                            successFullTransfers++;
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            failedTransfers ++;
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }                        
+                        </code>
+                    </pre>
+            </section>
+            
+            <section>
                 <h4>Как быть с зависимостями?</h4>
                 <ul>
                     <li class="fragment">Удовлетворять зависимости реальными объектами</li>
-                    <li class="fragment">Использовать моки( Mocks )</li>
-                    <li class="fragment">Использовать stub</li>
+                    <li class="fragment">Использовать ненастоящие объекты</li>
                 </ul>
             </section>
             <section>
-                ${stub vs mocks}
+                    <h3>Тест с реальными объектами: подготовка</h3>
+                    <pre>
+                        <code class="java" data-trim>
+                                @Test
+                                public void transferTest(){
+                                    //Подготовка
+                                    AccountInfoService service = new AccountInfoServiceImpl();
+                                    AccountInfo sourceInfo = service.createNewAccountInfo();
+                                    service.updateBalance(sourceInfo.getAccountId(), 10.0);
+                                    AccountInfo targetInfo = service.createNewAccountInfo();
+                                    TransferService transferService = new TransferService(service, new TransferLogService());
+                                    
+                                    ...
+                                }
+                        </code>
+                    </pre>
+                </section>
+                <section>
+                        <h3>Тест с реальными объектами: действия</h3>
+                        <pre>
+                            <code class="java" data-trim>
+                                    @Test
+                                    public void transferTest(){
+                                        ...
+                                        
+                                        //Действия
+                                        transferService.makeTransfer(sourceInfo.getAccountId(), targetInfo.getAccountId(), 5.0);
+                                
+                                        ...
+                                    }
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                            <h3>Тест с реальными объектами: проверки</h3>
+                            <pre>
+                                <code class="java" data-trim>
+                                        @Test
+                                        public void transferTest(){
+                                            ...
+                                    
+                                            //Проверки
+                                            Assert.assertEquals(1, transferService.getSuccessFullTransfers());
+                                            Assert.assertEquals(5.0, service.getInfo(sourceInfo.getAccountId()).getCurrentBalance(), 0.0);
+                                            Assert.assertEquals(5.0, service.getInfo(targetInfo.getAccountId()).getCurrentBalance(), 0.0);
+                                        }
+                                </code>
+                            </pre>
+                        </section>
+            <section>
+                <h3>Тест с реальными объектами: всё вместе</h3>
+                <pre>
+                    <code class="java" data-trim>
+                            @Test
+                            public void transferTest(){
+                                //Подготовка
+                                AccountInfoService service = new AccountInfoServiceImpl();
+                                AccountInfo sourceInfo = service.createNewAccountInfo();
+                                service.updateBalance(sourceInfo.getAccountId(), 10.0);
+                                AccountInfo targetInfo = service.createNewAccountInfo();
+                                TransferService transferService = new TransferService(service, new TransferLogService());
+                                
+                                //Действия
+                                transferService.makeTransfer(sourceInfo.getAccountId(), targetInfo.getAccountId(), 5.0);
+                        
+                                //Проверки
+                                Assert.assertEquals(1, transferService.getSuccessFullTransfers());
+                                Assert.assertEquals(5.0, service.getInfo(sourceInfo.getAccountId()).getCurrentBalance(), 0.0);
+                                Assert.assertEquals(5.0, service.getInfo(targetInfo.getAccountId()).getCurrentBalance(), 0.0);
+                            }
+                    </code>
+                </pre>
             </section>
             <section>
-                ${test with mocks sample}
+                <h4>Ненастоящие объекты</h4>
+                <ul>
+                    <li>Stub - Заглушка с заранее заданным поведением.</li>
+                    <li>Mock - тоже заглушка, но настраиваемая под каждый тест</li>
+                </ul>
             </section>
             <section>
-                            ${test with mocks sample}
+                <h4>
+                    Stub
+                </h4>
+                <h5>Верифицируется( проверяется ) состояние тестового класса</h5>
+                <img src="img/stub.png"/>
+            </section>
+            <section>
+                <h4>Заглушка сервиса хранения данных аккаунтов</h4>
+                <pre>
+                    <code class="java" data-trim>
+                            public class AccountInfoStub implements AccountInfoService
+                            {
+                                private final static AccountInfo STUB = new AccountInfo(999, 10.00);
+                                private final static AccountInfoStub INSTANCE = new AccountInfoStub();
+                            
+                                private AccountInfoStub() { }
+                            
+                                public static AccountInfoStub get() { return INSTANCE; }
+                            
+                                @Override
+                                public AccountInfo createNewAccountInfo() { return STUB.clone(); }
+                                ...
+                                @Override
+                                public AccountInfo getInfo(long id) { return STUB.clone(); }
+                            }
+                    </code>
+                </pre>
+            </section>
+            <section>
+                <h4>Тест с использованием заглушки</h4>
+                <pre>
+                    <code class="java" data-trim>
+                            @Test
+                            public void testSuccessfullTransfers() throws Exception
+                            {
+                                TransferService transfers = new TransferService(AccountInfoStub.get(), new TransferLogService());
+                                transfers.makeTransfer(1, 2, 2.0);
+                                Assert.assertEquals(1, transfers.getSuccessFullTransfers());
+                            }
+                    </code>
+                </pre>
+            </section>
+            <section>
+                <h3>Mock - прокачанная заглушка</h3>
+                <h5>Используется для верификации поведения</h5>
+                <img src="img/mock.png"/>
+            </section>
+            <section>
+                <h4>Тест с использованием умной-заглушки</h4>
+                <pre>
+                    <code class="java" data-trim>
+                            @Test
+                            public void testTransferLogged(){
+                                //Подготовка
+                                TransferLogService mockedLogService = Mockito.mock(TransferLogService.class);
+                                TransferService transfers = new TransferService(AccountInfoStub.get(), mockedLogService);
+                        
+                                //Действия
+                                transfers.makeTransfer(1, 2, 2.0);
+                        
+                                //Проверка
+                                //Проверяем, что метод logTransfer вызвался единожды с аргументами 1, 2, 2.0
+                                Mockito.verify(mockedLogService, Mockito.times(1)).logTransfer(1,2,2.0);
+                            }
+                    </code>
+                </pre>
+            </section>
+            <section>
+                    <h4>Еще один пример умной заглушки: подготовка</h4>
+                    <pre>
+                        <code class="java" data-trim>
+                                @Test
+                                public void testFailedTransfer(){
+                                    //Подготовка
+                                    AccountInfoService mockInfoService = Mockito.mock(AccountInfoService.class);
+                                    Mockito.when(mockInfoService.getInfo(1)).thenReturn(new AccountInfo(1, 10.0));
+                                    Mockito.when(mockInfoService.getInfo(2)).thenThrow(RuntimeException.class);
+                                    TransferService transferService = new TransferService(mockInfoService, new TransferLogService());
+                                    ...
+                                }
+                        </code>
+                    </pre>
+                </section>
+            <section>
+                    <h4>Еще один пример умной заглушки: действия</h4>
+                    <pre>
+                        <code class="java" data-trim>
+                                @Test
+                                public void testFailedTransfer(){
+                                    ...
+                                    //Действия
+                                    transferService.makeTransfer(1,2, 2.0);
+                                    ...
+                                }
+                        </code>
+                    </pre>
+                </section>
+            <section>
+                    <h4>Еще один пример умной заглушки: проверки</h4>
+                    <pre>
+                        <code class="java" data-trim>
+                                @Test
+                                public void testFailedTransfer(){
+                                    ...
+                            
+                                    //Проверки
+                                    Assert.assertEquals(1, transferService.getFailedTransfers());
+                                }
+                        </code>
+                    </pre>
+                </section>
+            <section>
+                <h4>Еще один пример умной заглушки</h4>
+                <pre>
+                    <code class="java" data-trim>
+                            @Test
+                            public void testFailedTransfer(){
+                                //Подготовка
+                                AccountInfoService mockInfoService = Mockito.mock(AccountInfoService.class);
+                                Mockito.when(mockInfoService.getInfo(1)).thenReturn(new AccountInfo(1, 10.0));
+                                Mockito.when(mockInfoService.getInfo(2)).thenThrow(RuntimeException.class);
+                                TransferService transferService = new TransferService(mockInfoService, new TransferLogService());
+                        
+                                //Действия
+                                transferService.makeTransfer(1,2, 2.0);
+                        
+                                //Проверки
+                                Assert.assertEquals(1, transferService.getFailedTransfers());
+                            }
+                    </code>
+                </pre>
             </section>
             <section>
                 <h4>Функциональное тестирование ( UI )</h4>
@@ -427,6 +795,10 @@ public class SeleniumSample {
 </code></pre>
                 </section>
                 <section>
+                    <h4>Первое правило тестов</h4>
+                    <p>Тесты <b>>должны</b> быть изолированны и не мешать друг другу</p>
+                </section>
+                <section>
                     <h4>Когда тесты запускать?</h4>
                     <ul>
                         <li>Всегда</li>
@@ -436,17 +808,40 @@ public class SeleniumSample {
                     </ul>
                 </section>
                 <section>
-                    ${TDD}
+                    <h4>А как понять что я достаточно написал?</h4>
+                    <p>Измерить покрытие кода</p>
                 </section>
                 <section>
-                    ${BDD}
+                    <h4>Покрытие кода</h4>
+                    <p>Кол-во кода в % во время выполнения тестирования</p>
+                        <ul style="font-size: 60%">
+                                <li>покрытие операторов — каждая ли строка исходного кода была выполнена и протестирована;</li>
+                                <li>покрытие условий — каждая ли точка решения (вычисления истинно ли или ложно выражение) была выполнена и протестирована;</li>
+                                <li>покрытие путей — все ли возможные пути через заданную часть кода были выполнены и протестированы;</li>
+                                <li>покрытие функций — каждая ли функция программы была выполнена;</li>
+                                <li>покрытие вход/выход — все ли вызовы функций и возвраты из них были выполнены.</li>
+                                <li>покрытие значений параметров — все ли типовые и граничные значения параметров были проверены.</li>
+                        </ul>
                 </section>
                 <section>
-                    JUnit VS Spock
+                    <h4>Тесты как двигатель разработки</h4>
+                    <p>Про модульное тестирование</p>
+                    <img src="img/tdd-flowchart.png">
                 </section>
                 <section>
-                    ${TDD}
+                    <h4>Плюсы и минусы</h4>
+                    <ul>
+                        <li class="fragment">+ Код не страшно рефакторить</li>
+                        <li class="fragment">+ Помогает сразу визуализировать, то, что должен делать код</li>
+                        <li class="fragment">+ Более гибкий и расшяремый код</li>
+                        <li class="fragment">+ Самодокументированный код</li>
+                        <li class="fragment">- Если автор кода что-то не так понял, то и тесты тестируют не то</li>
+                    </ul>
                 </section>
+                <section>
+                    <h4>Разработка через поведение</h4>
+                </section>
+                
 
                 <section>
                         <h2>Нагрузочное тестирование</h2>
