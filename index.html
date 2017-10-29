@@ -6,7 +6,7 @@
 
     <title>DistSearch</title>
 
-    <meta name="description" content="SMP Distributed search experience">
+    <meta name="description" content="Software testing talk">
     <meta name="author" content="Dmitriy Kolmogortsev">
 
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -106,15 +106,25 @@
             <section>
                 <h3>План:</h3>
                 <ol>
+                    <li>Место тестирования при разработке</li>
                     <li>Собственно, зачем тестировать?</li>
                     <li>Виды тестирования</li>
-                    <li>Инструменты</li>
-                    <li>TDD</li>
-                    <li>BDD</li>
-                    <li>UI-Testing</li>
-                    <li>Stress testing</li>
+                    <li>Тесты как двигатель разработки</li>
+                    <li>Нагрузочное тестирование</li>
                 </ol>
             </section>
+            <section>
+                <h4>
+                    Типичный жизненный цикл задачи
+                </h4>
+                <img src="img/task_wf.png">
+            </section>
+            <section>
+                    <h4>
+                        Что происходит при тестировании
+                    </h4>
+                    <img src="img/testing_wf.png">
+                </section>
             <section>
                 <h3>Зачем тестировать?</h3>
                 <p id="checkNoBugs">Проверить, что багов нет!</p>
@@ -203,10 +213,28 @@ public class AccountInfoService
                     </code>
                 </pre>
             </section>
+            <section data-background-image="img/ne_nado_tak.png" data-background-size="contain">
+
+            </section>
             <section>
-                <h4>А можно не через main?</h4>
-                <div class="fragment">
-                    <p>Можно - JUnit</p>
+                <h4>Почему?</h4>
+                <ul>
+                    <li>Не нужно переизобретать велосипед, всё уже придумано за вас</li>
+                    <li>Много инструментов тестирования</li>
+                    <li>У всех имеются гибкие проверки</li>
+                    <li>Поддерживаются всеми IDE</li>
+                </ul>
+            </section>
+            <section>
+                <h4>Популярные инструменты для АТ в Java</h4>
+                <ul>
+                    <li>JUnit</li>
+                    <li>Spock</li>
+                    <li>TestNG</li>
+                </ul>
+            </section>
+            <section>
+                <h4>Пример JUnit теста</h4>
                     <pre>
                         <code class="java" data-trim>
                             import static org.junit.Assert.*;
@@ -227,7 +255,6 @@ public class AccountInfoService
                             }
                         </code>
                     </pre>
-                </div>
             </section>
             <section>
                 <h4>JUnit аннотации</h4>
@@ -700,6 +727,7 @@ public class AccountInfoService
             </section>
             <section>
                 <h4>Функциональное тестирование ( UI )</h4>
+                <img src="img/functional_test.png" >
             </section>
             <section>
                     <h2>Selenium</h2>
@@ -824,6 +852,23 @@ public class SeleniumSample {
                         </ul>
                 </section>
                 <section>
+                    <h4>JaCoCo</h4>
+                    <pre>
+                        <code class="xml">
+                                <plugin>
+                                    <groupId>org.jacoco</groupId>
+                                    <artifactId>jacoco-maven-plugin</artifactId>
+                                    <version>0.7.9</version>
+                                </plugin>
+                        </code>
+                    </pre>
+                </section>
+                <section>
+                    <h4>JaCoCo: результат</h4>
+                    <pre><code>mvn clean install</code></pre>
+                    <img src="img/jacoco.png">
+                </section>
+                <section>
                     <h4>Тесты как двигатель разработки</h4>
                     <p>Про модульное тестирование</p>
                     <img src="img/tdd-flowchart.png">
@@ -845,7 +890,7 @@ public class SeleniumSample {
 
                 <section>
                         <h2>Нагрузочное тестирование</h2>
-                        <img src="img/load.jpg" height="500px" />
+                        <img src="img/load.jpg" height="300px" />
                     </section>
                     <section>
                         <h2>Проблема</h2>
@@ -935,6 +980,17 @@ public class SeleniumSample {
                     <section>
                         <h2>Запись сценария</h2>
                         <img src="img/proxy.png" height="400px">
+                    </section>
+                    <section>
+                        <h4>Далее</h4>
+                        <ul>
+                            <li>Воспроизводим сценарий</li>
+                            <li>Анализируем результат</li>
+                            <li>Радуемся <span class="fragment"> или нет</span></li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h3>Спасибо за внимание</h3>
                     </section>
     </div>
 
