@@ -757,8 +757,7 @@ public class AccountInfoService
                 <pre style="width:auto;"><code data-trim class="java">
 //  Создаем новый webdriver с указанием geckodriver
 System.setProperty("webdriver.gecko.driver", "${ путь до geckodriver }");
-FirefoxOptions firefoxOptions = new FirefoxOptions();
-firefoxOptions.setBinary("${ путь до firefox}");
+System.setProperty("webdriver.firefox.bin", "${ путь до firefox }");
 WebDriver wd = new FirefoxDriver();
 </code></pre>
             </section>
@@ -813,8 +812,7 @@ public class SeleniumTest
     public void googleTest() throws  Exception{
         //  Создаем новый webdriver с указанием geckodriver
         System.setProperty("webdriver.gecko.driver", "${ путь до geckodriver }");
-        FirefoxOptions firefoxOptions = new FirefoxOptions();
-        firefoxOptions.setBinary("${ путь до firefox}");
+        System.setProperty("webdriver.firefox.bin", "${ путь до firefox }");
         WebDriver wd = new FirefoxDriver();
         // Открываем гугл
         wd.get("http://www.google.com");
