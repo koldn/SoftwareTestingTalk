@@ -484,15 +484,9 @@ public class AccountInfoService
                     </pre>
             </section>
             <section>
-<<<<<<< bf0d12330bb1e78f3b160e7ae87ba9cce81d532d
-                <h4>Сервис переводов. перевод</h4>
-                <pre style="width:auto;">
-                        <code class="java" data-trim>
-=======
                     <h4>Сервис переводов. перевод</h4>
                     <pre  style="width:auto;">
                         <code class="java" data-trim style=" font-size: 80%;">
->>>>>>> adj
                                 public class TransferService
                                 {
                                     ...
@@ -577,7 +571,7 @@ public class AccountInfoService
             <section>
                 <h3>Тест с реальными объектами: всё вместе</h3>
                 <pre>
-                    <code class="java" data-trim>
+                    <code class="java" data-trim style="font-size: 80%">
                             @Test
                             public void transferTest(){
                                 //Подготовка
@@ -761,9 +755,11 @@ public class AccountInfoService
             <section>
                 <h2>Тестируем гугл: открываем браузер</h2>
                 <pre style="width:auto;"><code data-trim class="java">
-// Создаем новый webdriver с указанием на банарник firefox
-WebDriver wd = new FirefoxDriver(new FirefoxBinary(
-new File("D:\\ff\\firefox.exe")), new FirefoxProfile());  
+//  Создаем новый webdriver с указанием geckodriver
+System.setProperty("webdriver.gecko.driver", "${ путь до geckodriver }");
+FirefoxOptions firefoxOptions = new FirefoxOptions();
+firefoxOptions.setBinary("${ путь до firefox}");
+WebDriver wd = new FirefoxDriver();
 </code></pre>
             </section>
 
@@ -810,12 +806,16 @@ wd.quit();
 
             <section>
                 <h2>Тестируем гугл</h2>
-                <pre style="width:auto;"><code data-trim class="java" style="font-size:80%;">
-public class SeleniumSample {
-    public static void main(String[] args) throws InterruptedException {
-        // Создаем новый webdriver с указанием на банарник firefox
-        WebDriver wd = new FirefoxDriver(new FirefoxBinary(new File(
-                "D:\\ff\\firefox.exe")), new FirefoxProfile());
+                <pre style="width:auto;"><code class="java" style="font-size:60%;" data-trim>
+public class SeleniumTest
+{
+    @Test
+    public void googleTest() throws  Exception{
+        //  Создаем новый webdriver с указанием geckodriver
+        System.setProperty("webdriver.gecko.driver", "${ путь до geckodriver }");
+        FirefoxOptions firefoxOptions = new FirefoxOptions();
+        firefoxOptions.setBinary("${ путь до firefox}");
+        WebDriver wd = new FirefoxDriver();
         // Открываем гугл
         wd.get("http://www.google.com");
         final String searchString = "selenium";
@@ -837,7 +837,7 @@ public class SeleniumSample {
             </section>
             <section>
                 <h4>Первое правило тестов</h4>
-                <p>Тесты <b>>должны</b> быть изолированны и не мешать друг другу</p>
+                <p>Тесты <b>должны</b> быть изолированны и не мешать друг другу</p>
             </section>
             <section>
                 <h4>Когда тесты запускать?</h4>
