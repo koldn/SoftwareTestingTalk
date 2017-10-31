@@ -50,6 +50,9 @@
             background: none;
             box-shadow: none;
             max-height: none;
+            line-height: 1.5;
+            overflow: hidden;
+            font-size: 90%;
         }
         
         .reveal section img {
@@ -57,10 +60,7 @@
             box-shadow: none;
         }
         
-        .reveal pre code {
-            overflow: hidden;
-            font-size: 70%;
-        }
+    
         
         .reveal .footer {
             font-size: 22pt;
@@ -170,14 +170,10 @@
                     <code class="java" data-trim>
 package org.testingtalk.account;
                             
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
-                            
+                           
 public class AccountInfoService
 {
-    private final AtomicInteger idSequence = new AtomicInteger();
-                            
-    private final ConcurrentHashMap&ltLong, AccountInfo&gt accountsData = new ConcurrentHashMap&ltLong, AccountInfo&gt();
+    ...
                             
     public AccountInfo createNewAccountInfo(){
         AccountInfo newInfo = new AccountInfo(idSequence.getAndIncrement());
@@ -488,9 +484,15 @@ public class AccountInfoService
                     </pre>
             </section>
             <section>
+<<<<<<< bf0d12330bb1e78f3b160e7ae87ba9cce81d532d
                 <h4>Сервис переводов. перевод</h4>
                 <pre style="width:auto;">
                         <code class="java" data-trim>
+=======
+                    <h4>Сервис переводов. перевод</h4>
+                    <pre  style="width:auto;">
+                        <code class="java" data-trim style=" font-size: 80%;">
+>>>>>>> adj
                                 public class TransferService
                                 {
                                     ...
