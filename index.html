@@ -52,15 +52,13 @@
             max-height: none;
             line-height: 1.5;
             overflow: hidden;
-            font-size: 90%;
+            font-size: 82%;
         }
         
         .reveal section img {
             border: none;
             box-shadow: none;
         }
-        
-    
         
         .reveal .footer {
             font-size: 22pt;
@@ -231,6 +229,19 @@ public class AccountInfoService
                 </ul>
             </section>
             <section>
+                <h4>Простейший тест</h4>
+                <pre>
+                    <code class="java" data-trim>
+                        public class CalculatorTest {
+                            @Test
+                            public void testMultiply(){
+                                Assert.assertEquals(4, new Calculator().multiply(2,2));
+                            }
+                        }
+                    </code>
+                </pre>
+            </section>
+            <section>
                 <h4>Пример JUnit теста</h4>
                 <pre>
                         <code class="java" data-trim>
@@ -342,7 +353,9 @@ public class AccountInfoService
                             public class TransferService
                             {
                                 ...
-                                public void makeTransfer(long sourceAccount, long targetAccount, double moneyAmount)
+                                public void makeTransfer(long sourceAccount, 
+                                                         long targetAccount,
+                                                         double moneyAmount)
                                 {
                                     //Проверить аккаунт источник
                                     //Проверить целевой аккаунт
@@ -396,11 +409,14 @@ public class AccountInfoService
                                 public class TransferService
                                 {
                                     ...
-                                    public void makeTransfer(long sourceAccount, long targetAccount, double moneyAmount)
+                                    public void makeTransfer(long sourceAccount, 
+                                                             long targetAccount, 
+                                                             double moneyAmount)
                                     {
                                         //Проверить аккаунт источник
                                         if(sourceAccount <= 0){
-                                            throw new IllegalArgumentException("Invalid source account id: " + sourceAccount);
+                                            throw new IllegalArgumentException("Invalid source account id: " 
+                                                                                + sourceAccount);
                                         }
                                         //Проверить целевой аккаунт
                                         //Проверить сумму перевода
@@ -419,12 +435,15 @@ public class AccountInfoService
                                     public class TransferService
                                     {
                                         ...
-                                        public void makeTransfer(long sourceAccount, long targetAccount, double moneyAmount)
+                                        public void makeTransfer(long sourceAccount, 
+                                                                 long targetAccount,
+                                                                 double moneyAmount)
                                         {
                                             //Проверить аккаунт источник
                                             //Проверить целевой аккаунт
                                             if(targetAccount <= 0){
-                                                throw new IllegalArgumentException("Invalid target account id: "+targetAccount);
+                                                throw new IllegalArgumentException("Invalid target account id: "
+                                                                                    +targetAccount);
                                             }
                                             //Проверить сумму перевода
                                             //Проверить наличие суммы у аккаунта источника
@@ -438,17 +457,20 @@ public class AccountInfoService
             <section>
                 <h4>Сервис переводов. перевод</h4>
                 <pre style="width:auto;">
-                        <code class="java" data-trim>
+                        <code class="java" data-trim style="font-size: 80%">
                                 public class TransferService
                                 {
                                     ...
-                                    public void makeTransfer(long sourceAccount, long targetAccount, double moneyAmount)
+                                    public void makeTransfer(long sourceAccount, 
+                                                             long targetAccount,
+                                                             double moneyAmount)
                                     {
                                         //Проверить аккаунт источник
                                         //Проверить целевой аккаунт
                                         //Проверить сумму перевода
                                         if(moneyAmount <= 0){
-                                            throw new IllegalArgumentException("Non positive transfer amount is specified");
+                                            throw new IllegalArgumentException("Non positive transfer amount 
+                                                                                is specified");
                                         }
                                         //Проверить наличие суммы у аккаунта источника
                                         //Выполнить перевод
@@ -484,8 +506,8 @@ public class AccountInfoService
                     </pre>
             </section>
             <section>
-                    <h4>Сервис переводов. перевод</h4>
-                    <pre  style="width:auto;">
+                <h4>Сервис переводов. перевод</h4>
+                <pre style="width:auto;">
                         <code class="java" data-trim style=" font-size: 80%;">
                                 public class TransferService
                                 {
@@ -529,7 +551,8 @@ public class AccountInfoService
                                     AccountInfo sourceInfo = service.createNewAccountInfo();
                                     service.updateBalance(sourceInfo.getAccountId(), 10.0);
                                     AccountInfo targetInfo = service.createNewAccountInfo();
-                                    TransferService transferService = new TransferService(service, new TransferLogService());
+                                    TransferService transferService = new TransferService(service, 
+                                                                                          new TransferLogService());
                                     
                                     ...
                                 }
@@ -562,8 +585,10 @@ public class AccountInfoService
                                     
                                             //Проверки
                                             Assert.assertEquals(1, transferService.getSuccessFullTransfers());
-                                            Assert.assertEquals(5.0, service.getInfo(sourceInfo.getAccountId()).getCurrentBalance(), 0.0);
-                                            Assert.assertEquals(5.0, service.getInfo(targetInfo.getAccountId()).getCurrentBalance(), 0.0);
+                                            Assert.assertEquals(5.0, 
+                                                                service.getInfo(sourceInfo.getAccountId()).getCurrentBalance(), 0.0);
+                                            Assert.assertEquals(5.0, 
+                                                                service.getInfo(targetInfo.getAccountId()).getCurrentBalance(), 0.0);
                                         }
                                 </code>
                             </pre>
@@ -784,7 +809,7 @@ searchBox.submit();
 
             <section>
                 <h2>Тестируем гугл: ждем поисковой выдачи</h2>
-                <pre style="width:auto;"><code data-trim class="java">
+                <pre style="width:auto;"><code class="java" data-noescape>
 // т.к. google асинхронный - ждем поисковой выдачи
 (new WebDriverWait(wd, 10)).until(new ExpectedCondition&lt;Boolean&gt;() {
     public Boolean apply(WebDriver d) {
@@ -916,7 +941,7 @@ public class SeleniumTest
             <section>
                 <h4>В коде:</h4>
                 <pre>
-                    <code class="java" data-trim>
+                    <code class="java">
                         public class SearchSteps {
                             @Given("Я открываю (.*)")
                             public void openUrl(String url) { ... }
@@ -1058,6 +1083,7 @@ public class SeleniumTest
                 history: true,
                 center: true,
                 slideNumber: true,
+                width: "1150",
 
                 transition: 'slide', // none/fade/slide/convex/concave/zoom
 
